@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 const connectDb = require('./config/dbConnection');
 const exampleRoute = require('./routes/example'); 
 var hbs = require('hbs');
-const errorHandler=require("./middleware/errorHandler");
+const errorHandler=require("./middlewares/errorHandler");
 hbs.registerPartials(__dirname+'/views/partials',function(err){});
 
 

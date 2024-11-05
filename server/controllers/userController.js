@@ -20,8 +20,9 @@ const requireUser = asyncHandler(async(req,res)=>{
     const user = await User.create({
         name,
         email,
-        phoneno,
+        phoneNo,
         password: hashedPassword,
     });
     ReadableByteStreamController.status(201).json({message: "User registered successfully",user});
 });
+module.exports = {registerUser};
