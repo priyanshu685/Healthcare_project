@@ -14,5 +14,11 @@
         <input type="submit" value="upload">
         </form>
     </div>
+    {{#if imageUrl}}
+    <div>
+        <h2>Your Uploaded Image</h2>
+        <img src="{{imageUrl}}" alt="Uploaded Avatar" style="max-width: 200px">
+    </div>
+    {{/if}}
 </body>
 </html>

@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const Doctor = require("../modules/doctorModel");
+const Doctor = require("../models/doctorModel");
 
 // Register a new doctor
 const registerDoctor = asyncHandler(async (req, res) => {
