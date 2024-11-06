@@ -1,28 +1,70 @@
 const asyncHandler = require("express-async-handler");
-const bcsypt = require("byrypt");
-const User = require("./models/userModel");
+const bcrypt = require("bcrypt");
+const User = require("../modules/userModel");
 require("dotenv").config();
 
+// Register a new user
+const registerUser = asyncHandler(async (req, res) => {
+    const { firstName, lastName, email, password, phoneNumber, age, bloodGroup, gender } = req.body;
 
-const requireUser = asyncHandler(async(req,res)=>{
-    const{name, email, password, phoneno} = req.body;
-    if(!name||!email||!password||!phoneno){
+    // Check if all fields are provided
+    if (!firstName || !lastName || !email || !password || !phoneNumber || !age || !bloodGroup || !gender) {
         res.status(400);
-        throw new Error("Please provide all fields");
+        throw new Error("Please provide all required fields");
     }
-    const userExists = await User.findOne({email});
-    if(userExists){
-        return res.status(400).json({message: "user already exist"});
-    }
-    const salt = await bcrypt.genSalt(10);
-    const hashedpassword = await bcrypt.hash(password, salt);
 
-    const user = await User.create({
-        name,
+    // Check if user already exists
+    const userExist = await User.findOne({ email });
+    if (userExist) {
+        return res.status(400).json({ message: "User already exists" });
+    }
+
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create the user
+    const newUser = await User.create({
+        firstName,
+        lastName,
         email,
-        phoneNo,
+        phoneNumber,
+        age,
+        bloodGroup,
+        gender,
         password: hashedPassword,
     });
-    ReadableByteStreamController.status(201).json({message: "User registered successfully",user});
+
+    // Send success response
+    res.status(201).json({ message: "User registered successfully", newUser });
 });
-module.exports = {registerUser};
+
+// User login
+const userLogin = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+
+    // Check if both email and password are provided
+    if (!email || !password) {
+        res.status(400);
+        throw new Error("Please provide both email and password");
+    }
+
+    // Find the user by email
+    const user = await User.findOne({ email });
+
+    // Check if the user exists and the password is correct
+    if (user && (await bcrypt.compare(password, user.password))) {
+        res.status(200).json({
+            id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            message: "Login successful!",
+        });
+    } else {
+        res.status(401);
+        throw new Error("Invalid email or password");
+    }
+});
+
+module.exports = { registerUser, userLogin };

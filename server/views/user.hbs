@@ -6,11 +6,17 @@
     <title>Document</title>
 </head>
 <body>
+    
+    {{> partials}}
+    
+    <h1>AllUsers</h1>
     <ul>
-        {{#each users as |user|}}
-        <li>{{user.username}}</li>
-
+        {{#each users}}
+        <li>
+            Name:{{this.name}}, Age:{{this.age}}
+        </li>
         {{/each}}
     </ul>
+    
 </body>
 </html>
