@@ -6,8 +6,8 @@ const connectDb = require("./config/dbConnection");
 const hbs = require("hbs");
 const path = require("path");
 const fs = require("fs"); // Importing fs to read files from the uploads directory
-const userRoutes = require("./routes/userRoutes");
-const doctorRoutes = require('./routes/doctorRoutes');
+const userRoutes = require("./routes/userRoutes.js");
+const doctorRoutes = require('./routes/doctorRoutes.js');
 const multer = require("multer");
 
 // Load environment variables from .env file

@@ -6,6 +6,6 @@ const { registerUser, userLogin } = require("../controllers/userController"); //
 router.post("/register", registerUser);
 
 // Route for user login
-router.post("/login", userLogin);
+router.post("/login",jwtAuthMiddleware, userLogin);
 
 module.exports = router;
