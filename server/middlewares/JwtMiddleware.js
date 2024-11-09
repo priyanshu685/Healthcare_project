@@ -32,4 +32,4 @@ const validateJwtToken=(req,res,next)=>{
     }
 }
 
-modules.exports = {generateJwtToken,validateJwtToken};
+module.exports = {generateJwtToken,validateJwtToken};
